@@ -7,6 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class HederComponent  implements OnInit {
  @Input() title!: string;
+ @Input() backButton!: string;
+
   constructor() { }
 
   ngOnInit() {}
