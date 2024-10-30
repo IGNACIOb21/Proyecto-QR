@@ -15,7 +15,10 @@ export class RegistroPage implements OnInit {
     uid: new FormControl(''),
     email: new FormControl('',[Validators.required, Validators.email]),
     password: new FormControl('',[Validators.required]),
-    name: new FormControl('',[Validators.required, Validators.minLength(4)])
+    name: new FormControl('',[Validators.required, Validators.minLength(4)]),
+    apellidoPaterno: new FormControl('',[Validators.required, Validators.minLength(4)]),
+    apellidoMaterno: new FormControl('',[Validators.required, Validators.minLength(4)]),
+    tipoUsuario: new FormControl('',[Validators.required, Validators.minLength(4)])
   })
   
   firebaseSvc = inject(FirebaseService);

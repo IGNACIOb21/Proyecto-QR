@@ -6,6 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./heder.component.scss'],
 })
 export class HederComponent  implements OnInit {
+  
  @Input() title!: string;
  @Input() backButton!: string;
 

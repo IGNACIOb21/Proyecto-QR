@@ -1,4 +1,4 @@
-<app-heder backButton="/auth" title="Registro"></app-heder>
+<app-heder backButton="/auth" title="Recuperar cuenta"></app-heder>
 <ion-content>
 
     <div class="d-flex-center">
@@ -13,6 +13,46 @@
             [control]="form.controls.name"
             type="text"
             label="Nombre"
+            ></app-custom-input>
+
+            <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
+                <div *ngIf="form.controls.email.errors?.['required']"> El correo es requerido</div>
+                <div *ngIf="form.controls.email.errors?.['minlenght']"> El nombre debe tener al menos 4 caracteres</div>
+            </div>
+            <!--========= APpaterno ===========-->
+            <app-custom-input 
+            autocapitalize="apellidoPaterno"
+            icon="person-outline"
+            [control]="form.controls.apellidoPaterno"
+            type="text"
+            label="Apellido paterno"
+            ></app-custom-input>
+
+            <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
+                <div *ngIf="form.controls.email.errors?.['required']"> El correo es requerido</div>
+                <div *ngIf="form.controls.email.errors?.['minlenght']"> El nombre debe tener al menos 4 caracteres</div>
+            </div>
+            <!--========= APmaterno ===========-->
+            <app-custom-input 
+            autocapitalize="apellidoMaterno"
+            icon="person-outline"
+            [control]="form.controls.apellidoMaterno"
+            type="text"
+            label="Apellido materno"
+            ></app-custom-input>
+
+            <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
+                <div *ngIf="form.controls.email.errors?.['required']"> El correo es requerido</div>
+                <div *ngIf="form.controls.email.errors?.['minlenght']"> El nombre debe tener al menos 4 caracteres</div>
+            </div>
+
+            <!--========= tipoUser ===========-->
+            <app-custom-input 
+            autocapitalize="tipoUsuario"
+            icon="person-outline"
+            [control]="form.controls.tipoUsuario"
+            type="text"
+            label="Tipo usuario"
             ></app-custom-input>
 
             <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
