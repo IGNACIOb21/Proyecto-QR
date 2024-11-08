@@ -29,6 +29,10 @@ const routes: Routes = [
         path: 'estadisticas',
         loadChildren: () => import('./../estadisticas/estadisticas.module').then(m => m.EstadisticasPageModule)
       },
+      {
+        path: 'escaner-qr',
+        loadChildren: () => import('./../escaner-qr/escaner-qr.module').then( m => m.EscanerQRPageModule)
+      }
     ]
   }
 ];
