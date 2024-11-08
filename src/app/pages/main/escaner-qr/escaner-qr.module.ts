@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { EscanerQRPageRoutingModule } from './escaner-qr-routing.module';
 
 import { EscanerQRPage } from './escaner-qr.page';
+import { SharedModule } from "../../../shared/shared.module";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    EscanerQRPageRoutingModule
+    EscanerQRPageRoutingModule,
+    SharedModule
   ],
   declarations: [EscanerQRPage]
 })
