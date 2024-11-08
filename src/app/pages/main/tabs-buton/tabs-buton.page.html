@@ -1,20 +1,24 @@
-<ion-tabs  >
-  <ion-tab-bar slot="bottom" >
+<ion-tabs>
+  <ion-tab-bar slot="bottom" style="position: sticky; bottom: 0;">
     <ion-tab-button tab="home">
       <ion-icon name="person-sharp"></ion-icon>
-      Inicio
-    </ion-tab-button>
-    <ion-tab-button tab="estadisticas">
-      <ion-icon name="football"></ion-icon>
-      Estadisticas
+      <ion-label>Inicio</ion-label>
     </ion-tab-button>
     <ion-tab-button tab="profile">
+      <ion-icon name="football"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="profile">
+      <ion-icon name="qr-code-outline"></ion-icon>
+      <ion-label>E-QR</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="estadisticas">
       <ion-icon name="calendar"></ion-icon>
-      Agenda
+      <ion-label>Horario</ion-label>
     </ion-tab-button>
     <ion-tab-button tab="configuracion">
       <ion-icon name="cog"></ion-icon>
-      Configuracion
+      <ion-label>Configurar</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

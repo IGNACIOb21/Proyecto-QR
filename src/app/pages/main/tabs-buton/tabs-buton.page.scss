@@ -1,3 +1,17 @@
 ion-tab-button {
     color: rgb(224, 0, 0); /* Cambia el color del texto de las pestañas */
   }
+  ion-tab-bar {
+    position: sticky;
+    bottom: 0;
+    background-color: white;  // Color de fondo de la barra, ajusta según lo necesites
+  }
+  
+  ion-tab-button {
+    font-size: 0.8rem; // Ajusta el tamaño del texto
+  }
+  
+  ion-icon {
+    font-size: 1.2rem; // Ajusta el tamaño del icono
+  }
+  
