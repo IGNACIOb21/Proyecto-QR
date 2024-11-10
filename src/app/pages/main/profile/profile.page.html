@@ -1,9 +1,14 @@
-<app-heder title="Agendar partido"></app-heder>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Perfil del Alumno</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div class="profile-container">
+    <img [src]="student.photoUrl" alt="Foto del alumno" class="profile-photo" />
+    <h2>{{ student.name }}</h2>
+    <p>{{ student.email }}</p>
+    <p><strong>Carrera:</strong> {{ student.career }}</p>
+  </div>
 </ion-content>

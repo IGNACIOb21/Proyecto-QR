@@ -1,5 +1,10 @@
-
-ion-content {
-        --background: #F7D9A0; // Fondo oscuro
-    }
-    
+.profile-container {
+    text-align: center;
+  }
+  
+  .profile-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 10px auto;
+  }
