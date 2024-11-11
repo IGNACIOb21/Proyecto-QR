@@ -1,11 +1,89 @@
-<app-heder title="Inicio"></app-heder>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Horario con Ionic</title>
+  <link href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+  <style>
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-gap: 1px;
+      background-color: #333;
+    }
+    .schedule-grid div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      font-size: 16px;
+      background-color: #f4f4f4;
+      border: 1px solid #ddd;
+    }
+    .header {
+      background-color: #4CAF50;
+      color: rgb(123, 86, 86);
+      font-weight: bold;
+    }
+    .time {
+      background-color: #ffeb3b;
+      color: black;
+    }
+    .empty {
+      background-color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Horario</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content [fullscreen]="true">
-   <ion-title class="ion-no-padding-top" style="text-align: center; color: rgb(0, 0, 0);">Tiempo</ion-title>
-  <ion-button (click)="signOut()">Cerrar sesión</ion-button>
-  
- 
-  
-</ion-content>
+  <ion-content>
+    <div class="schedule-grid">
+      <!-- Días de la semana -->
+      <div class="header"></div>
+      <div class="header">Lunes</div>
+      <div class="header">Martes</div>
+      <div class="header">Miércoles</div>
+      <div class="header">Jueves</div>
+      <div class="header">Viernes</div>
+      <div class="header">Sábado</div>
+      
+      <!-- Horarios -->
+      <div class="time">08:00 - 09:00</div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
 
+      <div class="time">09:00 - 10:00</div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
 
+      <div class="time">10:00 - 11:00</div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+      <div class="empty"></div>
+
+      <!-- Puedes añadir más horarios según sea necesario -->
+    </div>
+  </ion-content>
+</body>
+</html>

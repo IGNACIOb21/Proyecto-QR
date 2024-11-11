@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-home',
