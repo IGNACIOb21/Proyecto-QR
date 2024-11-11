@@ -9,10 +9,42 @@ h1, h2, h3, h4, h5, h6 {
 
 
 ion-content {
-    --background: #cd9ef6a3; 
+    --background: #f1d65ea3; 
 }
 
 .content-padding {
     margin-top: 20px;
+  }
+  
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-gap: 1px;
+    background-color: #333;
+  }
+  
+  .schedule-grid div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-size: 16px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+  }
+  
+  .header {
+    background-color: #4CAF50;
+    color: rgb(123, 86, 86);
+    font-weight: bold;
+  }
+  
+  .time {
+    background-color: #ffeb3b;
+    color: black;
+  }
+  
+  .empty {
+    background-color: #e0e0e0;
   }
   
