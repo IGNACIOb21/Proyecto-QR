@@ -1,8 +1,50 @@
 <app-heder title="Escaner QR"></app-heder>
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">estadisticas</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+<ion-content class="ion-padding ion-text-center">
+
+
+  <ion-segment [(ngModel)]="segment"  mode="ios">
+    <ion-segment-button value="scan">
+      <ion-label>Scan QR</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button value="pasta">
+      <ion-label>Pasta</ion-label>
+    </ion-segment-button>
+
+  </ion-segment>
+
+  <!-- ========== Scan QR =========-->
+  <div class="segment" *ngIf="segment === 'scan'">
+    <div class="segment-content">
+      <img src="assets/images/scan-qr.webp" alt="">
+      <h6 class="scan-label">Escanea un codigo QR</h6>
+
+      <ion-row>
+        <ion-col size="6">
+          <ion-button (click)="startScan()" class="submit" expand="block" >
+            Escanear
+            <ion-icon slot="end" name="scan-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-button class="submit" expand="block" >
+            Escanear
+            <ion-icon slot="end" name="image-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-item class="result" *ngIf="scanResult" lines="none">
+        <ion-label>
+          <p>Scan result</p>
+          <div>{{scanResult}}</div>
+        </ion-label>
+      </ion-item>
+
+    </div>
+  </div>
+
+  {{segment}}
 </ion-content>
