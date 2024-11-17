@@ -10,10 +10,12 @@
   <div class="profile-container">
     <img [src]="student.photoUrl" alt="Foto del alumno" class="profile-photo" />
     <h2>{{ student.name }}</h2>
-    <p>{{ student.email }}</p>
+    <p><strong>Email: </strong>{{ student.email }}</p>
     <p><strong>Carrera:</strong> {{ student.career }}</p>
 
+    
     <!-- Botón para cerrar sesión -->
-    <ion-button expand="full" color="danger" (click)="signOut()">Cerrar Sesión</ion-button>
-  </div>
-</ion-content>
+    <div class="contenedor">
+      <ion-button expand="full" color="danger" class="boton-salida" (click)="signOut()">Cerrar Sesión</ion-button>
+    </div>
+

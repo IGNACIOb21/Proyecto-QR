@@ -9,10 +9,10 @@ import { AlertController } from '@ionic/angular';
 })
 export class ProfilePage {
   student = {
-    photoUrl: '',
-    name: '',
-    email: '',
-    career: ''
+    photoUrl: 'src\assets\images\Captura de pantalla 2024-09-22 232338.png',
+    name: 'Ignacio Aguilar',
+    email: 'ig.aguilar@duocuc.cl',
+    career: 'Ingenieria En Informatica'
   };
 
   constructor(private firebaseService: FirebaseService, private alertController: AlertController) {}
