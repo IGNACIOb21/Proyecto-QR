@@ -2,3 +2,22 @@
 ion-content {
     --background: #F7D9A0; // Fondo oscuro
 }
+
+ion-card {
+    margin-bottom: 16px;
+  }
+  
+  ion-card-title {
+    font-size: 1.2em;
+  }
+  
+  ion-button {
+    --border-radius: 8px;
+  }
+
+  .detalle {
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+  }
+  

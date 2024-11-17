@@ -1,8 +1,26 @@
 <app-heder title="Configuracion"></app-heder>
+
+
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">configuracion</ion-title>
+      <ion-title size="large">Configuracion</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div class="asignaturas">
+    <ion-card *ngFor="let asignatura of asignaturas" (click)="toggleDetalle(asignatura)">
+      <ion-card-header>
+        <ion-card-title>{{ asignatura.titulo }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button expand="full" color="primary" (click)="toggleDetalle(asignatura, $event)">Ver Detalle</ion-button>
+        <div *ngIf="asignatura.mostrarDetalle" class="detalle">
+          <p><strong>Sigla:</strong> {{ asignatura.sigla }}</p>
+          <p><strong>Profesor:</strong> {{ asignatura.profesor }}</p>
+          <p><strong>Título:</strong> {{ asignatura.titulo }}</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
