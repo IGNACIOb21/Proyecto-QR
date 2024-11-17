@@ -2,16 +2,13 @@ ion-header {
   --background: #0077cc; /* Azul primario */
   --color: #ffffff; /* Texto blanco */
 }
-
 ion-toolbar {
   --background: #005fa3; /* Azul más oscuro */
   --color: #ffffff; /* Texto blanco */
 }
-
 ion-content {
   background: #f0f8ff; /* Fondo azul claro */
 }
-
 .profile-header {
   text-align: center;
   padding: 20px;
@@ -19,7 +16,6 @@ ion-content {
   color: #ffffff;
   border-radius: 0 0 20px 20px;
 }
-
 .profile-photo {
   width: 100px;
   height: 100px;
@@ -27,13 +23,11 @@ ion-content {
   border: 50px solid #ffffff;
   margin: 5px auto;
 }
-
 .profile-name {
   font-size: 1.5em;
   font-weight: bold;
   margin: 10px 0;
 }
-
 .profile-info {
   font-size: 1em;
   margin: 5px 0;

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile',
@@ -7,11 +9,36 @@ import { Component } from '@angular/core';
 })
 export class ProfilePage {
   student = {
-    photoUrl:'https://photos.google.com/share/AF1QipM6EJeEbRWrBtJEpKySwrhPC7IjS3-jFGdpE214QfxC1VZspbuGh_Tf0k6dsC6nTg/photo/AF1QipPzFb65UFIcehJXmM5-BADZ8dSS0DbbakFQqNMk?key=X21HMlU1OEJYM1ROZ2o2QVBORVV2RDZsY3VwUE1R', // URL de la foto del alumno
-    name: 'Juan Pérez',
-    email: 'juan.perez@example.com',
-    career: 'Ingeniería en Informática'
+    photoUrl: '',
+    name: '',
+    email: '',
+    career: ''
   };
 
-  constructor() {}
+  constructor(private firebaseService: FirebaseService, private alertController: AlertController) {}
+
+  // Método para cerrar sesión
+  async signOut() {
+    const alert = await this.alertController.create({
+      header: 'Confirmar Cierre de Sesión',
+      message: '¿Estás seguro de que quieres cerrar sesión?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cierre de sesión cancelado');
+          },
+        },
+        {
+          text: 'Cerrar',
+          handler: () => {
+            this.firebaseService.signOut(); // Llamada al servicio de Firebase para cerrar sesión
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
 }

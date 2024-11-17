@@ -6,12 +6,14 @@
     </ion-toolbar>
   </ion-header>
 
-
 <ion-content class="ion-padding">
   <div class="profile-container">
     <img [src]="student.photoUrl" alt="Foto del alumno" class="profile-photo" />
     <h2>{{ student.name }}</h2>
     <p>{{ student.email }}</p>
     <p><strong>Carrera:</strong> {{ student.career }}</p>
+
+    <!-- Botón para cerrar sesión -->
+    <ion-button expand="full" color="danger" (click)="signOut()">Cerrar Sesión</ion-button>
   </div>
 </ion-content>
