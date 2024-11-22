@@ -11,6 +11,7 @@ import { BarcodeScanningModalComponent } from './barcode-scanning-modal.componen
 export class EscanerQRPage implements OnInit {
   
   segment = 'scan';
+  qrText='';
   scanResult= '';
 
   constructor(
@@ -39,9 +40,9 @@ export class EscanerQRPage implements OnInit {
   
     await modal.present();
 
-    const {data} = await modal.onWillDismiss();
+    const { data } = await modal.onWillDismiss();
     if(data){
-      this.scanResult =data?.barcode.displayValue; 
+      this.scanResult =data?.barcode?.displayValue; 
     }
   
   }
