@@ -64,4 +64,29 @@ getAuth(){
     return (await getDoc(doc(getFirestore(), path))).data();
   }
 
+  // En tu servicio FirebaseService
+
+  // Obtener el nombre del usuario autenticado
+  async getUserName(): Promise<string | null> {
+    const currentUser = getAuth().currentUser;
+
+    if (currentUser) {
+      // Si el usuario tiene un displayName configurado
+      if (currentUser.displayName) {
+        return currentUser.displayName;
+      }
+
+      // Si el displayName no está configurado, buscar en Firestore (opcional)
+      const userDocPath = `users/${currentUser.uid}`; // Ruta del documento en Firestore
+      const userData = await this.getDocument(userDocPath);
+
+      if (userData && userData['displayName']) {
+        return userData['displayName'];
+      }
+    }
+
+    return null; // Si no se encuentra información del usuario
+  }
+
+
 }

@@ -1,49 +1,24 @@
-<app-heder title="Estadisticas"></app-heder>
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Horario</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button menu="mainMenu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Bienvenido</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <div class="schedule-grid">
-    <!-- Días de la semana -->
-    <div class="header"></div>
-    <div class="header">Lunes</div>
-    <div class="header">Martes</div>
-    <div class="header">Miércoles</div>
-    <div class="header">Jueves</div>
-    <div class="header">Viernes</div>
-    <div class="header">Sábado</div>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <h1>¡Hola, {{ userName || 'Usuario' }}!</h1>
+  <p>Bienvenido a tu plataforma de asistencia.</p>
 
-    <!-- Horarios -->
-    <div class="time">08:00 - 09:00</div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
+  <div class="futuras-clases" *ngIf="futureClasses.length > 0">
+    <p>Clases programadas para hoy:</p>
+    <div *ngFor="let clase of futureClasses">
+      <p>{{ clase.name }} - {{ clase.time }} - {{ clase.sala }}</p>
+    </div>
+  </div>
 
-    <div class="time">09:00 - 10:00</div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-
-    <div class="time">10:00 - 11:00</div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-
-    <!-- Puedes añadir más horarios según sea necesario -->
+  <div class="no-classes-message" *ngIf="futureClasses.length === 0">
+    <p>No tienes clases programadas para hoy.</p>
   </div>
 </ion-content>

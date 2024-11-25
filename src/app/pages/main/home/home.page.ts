@@ -1,7 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from 'src/app/services/firebase.service';
-import { UtilsService } from 'src/app/services/utils.service';
-
 
 @Component({
   selector: 'app-home',
@@ -9,15 +7,15 @@ import { UtilsService } from 'src/app/services/utils.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  userName: string | null = null;
+  futureClasses = [
+    { name: 'Programacion', time: '10:00 AM', sala: 'Sala 503' },
+    { name: 'Proyectos', time: '12:00 PM', sala: 'Sala 702' }
+  ]; 
 
-  firebaseSvc =  inject(FirebaseService);
-  utilsSvc = inject(UtilsService);
+  constructor(private firebaseSvc: FirebaseService) {}
 
-  ngOnInit() {
-  }
-
-  //===== Cerrar Secion ======
-  signOut() {
-    this.firebaseSvc.signOut();
+  async ngOnInit() {
+    this.userName = await this.firebaseSvc.getUserName();
   }
 }
