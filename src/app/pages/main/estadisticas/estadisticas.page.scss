@@ -2,3 +2,60 @@
 ion-content {
     --background: #F7D9A0; // Fondo oscuro
 }
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+  }
+  
+  .horario-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background-color: #f4f4f9;
+  }
+  
+  .horario-table th, .horario-table td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+  
+  .horario-table th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .clase-cell {
+    background-color: #e8f5e9;
+    color: #388e3c;
+    font-weight: bold;
+    border: 1px solid #388e3c;
+  }
+  
+  .empty-cell {
+    color: #999;
+    font-style: italic;
+    background-color: #f1f1f1;
+  }
+  
+  .empty-message {
+    text-align: center;
+    padding: 20px;
+    color: #999;
+  }
+  
+  .table-container table {
+    width: 100%;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .horario-table th, .horario-table td {
+      padding: 10px;
+      font-size: 12px;
+    }
+  }
+  
+  

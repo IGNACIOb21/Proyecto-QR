@@ -7,3 +7,14 @@ export interface User{
     apellidoMaterno:string,
     tipoUsuario:string
 }
+
+  
+  export interface Horario {
+    asignatura: string;
+    sigla: string;
+    profesor: string;
+    dia: string;
+    horaInicio: string;
+    horaFin: string;
+  }
+  

@@ -1,73 +1,65 @@
 <app-heder title="Estadisticas"></app-heder>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Horario</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div *ngIf="horario.length === 0" class="empty-message">
+    <p>No tienes horario disponible.</p>
+  </div>
 
-  <ion-grid>
-    <!-- Fila de los días de la semana -->
-    <ion-row>
-      <ion-col class="header"></ion-col>
-      <ion-col class="header">Lunes</ion-col>
-      <ion-col class="header">Martes</ion-col>
-      <ion-col class="header">Miércoles</ion-col>
-      <ion-col class="header">Jueves</ion-col>
-      <ion-col class="header">Viernes</ion-col>
-      <ion-col class="header">Sábado</ion-col>
-    </ion-row>
+  <!-- Si hay horario, se muestra en una tabla por días de la semana -->
+  <div *ngIf="horario.length > 0" class="table-container">
+    <table class="horario-table">
+      <thead>
+        <tr>
+          <th>Hora</th>
+          <th>Lunes</th>
+          <th>Martes</th>
+          <th>Miércoles</th>
+          <th>Jueves</th>
+          <th>Viernes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Recorremos los rangos de horas -->
+        <tr *ngFor="let rango of rangosDeHoras">
+          <td>{{ rango }}</td> <!-- Muestra el rango de horas -->
 
-    <!-- Fila de horarios -->
-    <ion-row>
-      <ion-col class="time">08:00 - 09:00</ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-    </ion-row>
+          <!-- Mostrar clases por cada día de la semana en el rango de hora -->
+          <td *ngIf="getClasesPorRango('Lunes', rango); else noClasesLunes" class="clase-cell">
+            {{ getClasesPorRango('Lunes', rango) }}
+          </td>
+          <ng-template #noClasesLunes>
+            <td class="empty-cell">Sin clases</td>
+          </ng-template>
 
-    <ion-row>
-      <ion-col class="time">09:00 - 10:00</ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-    </ion-row>
+          <td *ngIf="getClasesPorRango('Martes', rango); else noClasesMartes" class="clase-cell">
+            {{ getClasesPorRango('Martes', rango) }}
+          </td>
+          <ng-template #noClasesMartes>
+            <td class="empty-cell">Sin clases</td>
+          </ng-template>
 
-    <ion-row>
-      <ion-col class="time">11:00 - 12:00</ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-    </ion-row>
+          <td *ngIf="getClasesPorRango('Miércoles', rango); else noClasesMiercoles" class="clase-cell">
+            {{ getClasesPorRango('Miércoles', rango) }}
+          </td>
+          <ng-template #noClasesMiercoles>
+            <td class="empty-cell">Sin clases</td>
+          </ng-template>
 
-    <ion-row>
-      <ion-col class="time">13:00 - 14:00</ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-    </ion-row>
+          <td *ngIf="getClasesPorRango('Jueves', rango); else noClasesJueves" class="clase-cell">
+            {{ getClasesPorRango('Jueves', rango) }}
+          </td>
+          <ng-template #noClasesJueves>
+            <td class="empty-cell">Sin clases</td>
+          </ng-template>
 
-    <ion-row>
-      <ion-col class="time">15:00 - 16:00</ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-      <ion-col class="empty"></ion-col>
-    </ion-row>
-  </ion-grid>
+          <td *ngIf="getClasesPorRango('Viernes', rango); else noClasesViernes" class="clase-cell">
+            {{ getClasesPorRango('Viernes', rango) }}
+          </td>
+          <ng-template #noClasesViernes>
+            <td class="empty-cell">Sin clases</td>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </ion-content>
