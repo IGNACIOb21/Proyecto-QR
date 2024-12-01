@@ -75,8 +75,8 @@ getAuth(){
     return (await getDoc(doc(getFirestore(), path))).data();
   }
 
-  // En tu servicio FirebaseService
 
+  
 
   // Obtener el nombre del usuario autenticado
   async getUserName(): Promise<string | null> {

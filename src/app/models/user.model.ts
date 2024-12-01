@@ -17,4 +17,8 @@ export interface User{
     horaInicio: string;
     horaFin: string;
   }
-  
+
+  export interface EscanerQR{
+    uid:string,
+    EscanerQR:string
+  }
