@@ -1,24 +1,30 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="end">
-      <ion-menu-button menu="mainMenu"></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Bienvenido</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-heder title="HOME"></app-heder>
 
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-content class="ion-padding">
   <h1>¡Hola, {{ userName || 'Usuario' }}!</h1>
-  <p>Bienvenido a tu plataforma de asistencia.</p>
+  <p>Bienvenido a tu plataforma de asistencia</p>
+  
 
-  <div class="futuras-clases" *ngIf="futureClasses.length > 0">
-    <p>Clases programadas para hoy:</p>
-    <div *ngFor="let clase of futureClasses">
-      <p>{{ clase.name }} - {{ clase.time }} - {{ clase.sala }}</p>
-    </div>
-  </div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Clases programadas para hoy:</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div *ngIf="clasesDelUsuario.length > 0">
+        <div *ngFor="let clase of clasesDelUsuario">
+          <ion-item>
+            <ion-label>
+              <p><strong>{{ clase.asignatura }}</strong> ({{ clase.sigla }})</p>
+              <p>Profesor: {{ clase.profesor }}</p>
+              <p>Hora: {{ clase.horaInicio }} - {{ clase.horaFin }} | Sala: {{ clase.sala }}</p>
+            </ion-label>
+          </ion-item>
+        </div>
+      </div>
 
-  <div class="no-classes-message" *ngIf="futureClasses.length === 0">
-    <p>No tienes clases programadas para hoy.</p>
-  </div>
+      <div *ngIf="clasesDelUsuario.length === 0">
+        <p>No tienes clases programadas para hoy.</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

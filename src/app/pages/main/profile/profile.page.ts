@@ -60,9 +60,10 @@ export class ProfilePage implements OnInit {
 
     await alert.present();
   }
+
+  // Guardar cambios después de la edición del perfil
   async saveChanges() {
     try {
-      // Obtiene el UID del usuario autenticado
       const currentUser = await this.firebaseService.getAuth().currentUser;
       if (currentUser) {
         await this.firebaseService.updateUserData(currentUser.uid, this.student); // Actualiza los datos en Firestore
@@ -73,8 +74,9 @@ export class ProfilePage implements OnInit {
       console.error('Error al actualizar los datos:', error);
     }
   }
+
+  // Alternar entre modo de visualización y edición
   toggleEditMode() {
     this.isEditing = !this.isEditing;
   }
-  
 }

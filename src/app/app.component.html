@@ -1,20 +1,3 @@
 <ion-app>
-  <ion-menu side="end" menuId="mainMenu" contentId="mainContent">
-    <ion-header>
-      <ion-toolbar color="primary">
-        <ion-title>Menú</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="closeMenu()">
-            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <!-- Botón para cerrar sesión -->
-    <div class="contenedor">
-      <ion-button expand="full" color="danger" class="boton-salida" (click)="signOut()">Cerrar Sesión</ion-button>
-    </div>
-  </ion-menu>
-
   <ion-router-outlet id="mainContent"></ion-router-outlet>
 </ion-app>
