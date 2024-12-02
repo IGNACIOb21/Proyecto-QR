@@ -49,6 +49,12 @@ getAuth(){
     return  updateProfile(getAuth().currentUser, {displayName})
   }
 
+  updateUserData(uid: string, data: any): Promise<void> {
+    const userDocPath = `users/${uid}`; // Ruta del documento del usuario en Firestore
+    return this.setDocument(userDocPath, data); // Usa el método `setDocument` para actualizar
+  }
+  
+
 
 
   //=========== enviar email para restablecer contraseña =============
@@ -136,4 +142,13 @@ getClasesPorDia(dia: string): string {
 
   return 'No hay clases disponibles';
 }
+async getUserData(): Promise<any> {
+  const currentUser = this.getAuth().currentUser;
+  if (currentUser) {
+    const userDocPath = `users/${currentUser.uid}`;
+    return await this.getDocument(userDocPath);
+  }
+  return null;
+}
+
 }

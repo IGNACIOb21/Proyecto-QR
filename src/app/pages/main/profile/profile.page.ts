@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { AlertController } from '@ionic/angular';
 
@@ -7,15 +7,34 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage {
-  student = {
-    photoUrl: 'src\assets\images\Captura de pantalla 2024-09-22 232338.png',
-    name: 'Ignacio Aguilar',
-    email: 'ig.aguilar@duocuc.cl',
-    career: 'Ingenieria En Informatica'
-  };
+export class ProfilePage implements OnInit {
+  // Datos del usuario que se mostrarán en la página
+  student: any = {};
+  isEditing = false; // Indica si el formulario de edición está activo
 
-  constructor(private firebaseService: FirebaseService, private alertController: AlertController) {}
+  constructor(
+    private firebaseService: FirebaseService,
+    private alertController: AlertController
+  ) {}
+
+  // Inicialización de la página
+  async ngOnInit() {
+    try {
+      const currentUser = await this.firebaseService.getUserData(); // Llama al servicio para obtener los datos del usuario
+      if (currentUser) {
+        this.student = {
+          ...currentUser,
+          photoUrl: currentUser.photoUrl || 'src/assets/images/default-profile.png',
+          carrera: currentUser.carrera || 'Carrera no especificada',
+          telefono: currentUser.telefono || 'Teléfono no especificado',
+        };
+      } else {
+        console.error('No se encontraron datos para el usuario autenticado');
+      }
+    } catch (error) {
+      console.error('Error al cargar los datos del usuario:', error);
+    }
+  }
 
   // Método para cerrar sesión
   async signOut() {
@@ -41,4 +60,21 @@ export class ProfilePage {
 
     await alert.present();
   }
+  async saveChanges() {
+    try {
+      // Obtiene el UID del usuario autenticado
+      const currentUser = await this.firebaseService.getAuth().currentUser;
+      if (currentUser) {
+        await this.firebaseService.updateUserData(currentUser.uid, this.student); // Actualiza los datos en Firestore
+        console.log('Datos actualizados correctamente');
+        this.isEditing = false; // Cambia al modo de visualización
+      }
+    } catch (error) {
+      console.error('Error al actualizar los datos:', error);
+    }
+  }
+  toggleEditMode() {
+    this.isEditing = !this.isEditing;
+  }
+  
 }

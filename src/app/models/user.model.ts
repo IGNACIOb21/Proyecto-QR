@@ -1,11 +1,13 @@
 export interface User{
-    uid:string,
-    email:string,
-    password:string,
-    name:string,
-    apellidoPaterno:string,
-    apellidoMaterno:string,
-    tipoUsuario:string
+    uid:string;
+    email:string;
+    password:string;
+    name:string;
+    apellidoPaterno:string;
+    apellidoMaterno:string;
+    tipoUsuario:string;
+    carrera: string; // Campo opcional
+    telefono: string; // Nuevo campo
 }
 
   
