@@ -20,14 +20,16 @@ export interface User{
     horaFin: string;
   }
 
-  export interface EscanerQR{
-    uid:string,
-    EscanerQR:string
-  }
+
 
 export interface EscanerQR{
   sigla: string,
   profesor: string,
   titulo: string,
   asistencias: string,
+}
+
+interface Asignatura {
+  asistencias: number;
+  // Agrega otras propiedades de la asignatura si es necesario
 }
