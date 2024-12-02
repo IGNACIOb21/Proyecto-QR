@@ -10,14 +10,21 @@
   <ion-content class="ion-padding">
     <div class="profile-container">
       <!-- Foto del alumno -->
-      <img [src]="student.photoUrl" alt="Foto del alumno" class="profile-photo" />
+      <div class="photo-container">
+        <img [src]="student.photoUrl" alt="Foto del alumno" class="profile-photo" />
+      </div>
+
+      <!-- Espaciador -->
+      <div class="spacer"></div>
 
       <!-- Modo de visualización -->
       <ng-container *ngIf="!isEditing">
-        <h2>{{ student.name }} {{ student.apellidoPaterno }} {{ student.apellidoMaterno }}</h2>
-        <p><strong>Email:</strong> {{ student.email }}</p>
-        <p><strong>Carrera:</strong> {{ student.carrera }}</p>
-        <p><strong>Teléfono:</strong> {{ student.telefono }}</p>
+        <div class="user-data">
+          <h2>{{ student.name }} {{ student.apellidoPaterno }} {{ student.apellidoMaterno }}</h2>
+          <p><strong>Email:</strong> {{ student.email }}</p>
+          <p><strong>Carrera:</strong> {{ student.carrera }}</p>
+          <p><strong>Teléfono:</strong> {{ student.telefono }}</p>
+        </div>
         <ion-button expand="full" (click)="toggleEditMode()">Editar Perfil</ion-button>
       </ng-container>
 
