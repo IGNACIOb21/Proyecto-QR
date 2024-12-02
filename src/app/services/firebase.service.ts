@@ -54,8 +54,13 @@ getAuth(){
     return this.setDocument(userDocPath, data); // Usa el método `setDocument` para actualizar
   }
   
-
-
+  // Obtener las asignaturas del estudiante por su UID
+  async getAsignaturasByUserId(uid: string) {
+    const asignaturasRef = this.firestore.collection('asignaturas', ref => ref.where('uid', '==', uid));
+    const asignaturasSnapshot = await asignaturasRef.get().toPromise();
+    return asignaturasSnapshot?.docs.map(doc => doc.data()) || [];
+  }
+  
 
   //=========== enviar email para restablecer contraseña =============
   sendRecoveryEmail(email: string){

@@ -24,3 +24,10 @@ export interface User{
     uid:string,
     EscanerQR:string
   }
+
+export interface EscanerQR{
+  sigla: string,
+  profesor: string,
+  titulo: string,
+  asistencias: string,
+}
