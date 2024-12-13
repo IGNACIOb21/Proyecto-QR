@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from 'firebase/auth';
 import { User, Horario } from '../models/user.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Firestore, getFirestore, setDoc, doc, getDoc } from '@angular/fire/firestore';
+import { Firestore, getFirestore, setDoc, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 import { environment } from 'src/environments/environment';
 import { initializeApp } from 'firebase/app';
@@ -12,12 +12,11 @@ import { initializeApp } from 'firebase/app';
   providedIn: 'root'
 })
 export class FirebaseService {
-
   auth = inject(AngularFireAuth);
   firestore = inject(AngularFirestore);
   utilsSvc = inject(UtilsService);
   db: Firestore;
-  horario: any = null;
+  horario: Horario | null = null; // Tipado explícito
 
   constructor() {
     // Inicializa Firebase con la configuración de tu entorno
@@ -25,45 +24,32 @@ export class FirebaseService {
     this.db = getFirestore(app);
   }
 
-  //======================  Autenticacion =======================
-
+  //======================  Autenticación =======================
   getAuth() {
     return getAuth();
   }
 
-  //=========== Acceder =============
   signIn(user: User) {
     return signInWithEmailAndPassword(getAuth(), user.email, user.password);
   }
 
-  //=========== crear nombre user en la BD =============
   regidtroIn(user: User) {
     return createUserWithEmailAndPassword(getAuth(), user.email, user.password);
   }
 
-  //=========== actualisar user =============
   updateUser(displayName: string) {
     return updateProfile(getAuth().currentUser, { displayName });
   }
 
   updateUserData(uid: string, data: any): Promise<void> {
-    const userDocPath = `users/${uid}`; // Ruta del documento del usuario en Firestore
-    return this.setDocument(userDocPath, data); // Usa el método `setDocument` para actualizar
+    const userDocPath = `users/${uid}`;
+    return this.setDocument(userDocPath, data);
   }
 
-  // Obtener las asignaturas del estudiante por su UID
-  async getAsignaturasByUserId(uid: string) {
-    const asignaturasRef = this.firestore.collection('asignaturas', ref => ref.where('uid', '==', uid));
-    const asignaturasSnapshot = await asignaturasRef.get().toPromise();
-    return asignaturasSnapshot?.docs.map(doc => doc.data()) || [];
-  }
-
-  //=========== enviar email para restablecer contraseña =============
   sendRecoveryEmail(email: string) {
     return sendPasswordResetEmail(getAuth(), email);
   }
 
-  //========= Cerrar Sesion =========
   signOut() {
     getAuth().signOut();
     localStorage.removeItem('user');
@@ -71,67 +57,17 @@ export class FirebaseService {
   }
 
   //======================  Base de Datos =======================
-
-  //========= Setear un documento (creo oremplasa)=========
   setDocument(path: string, data: any) {
-    return setDoc(doc(getFirestore(), path), data);
+    return setDoc(doc(this.db, path), data);
   }
 
-  //========= obtener un documento =========
   async getDocument(path: string) {
-    return (await getDoc(doc(getFirestore(), path))).data();
+    return (await getDoc(doc(this.db, path))).data();
   }
 
-  // Obtener el nombre del usuario autenticado
-  async getUserName(): Promise<string | null> {
-    const currentUser = getAuth().currentUser;
-
-    if (currentUser) {
-      // Si el usuario tiene un displayName configurado
-      if (currentUser.displayName) {
-        return currentUser.displayName;
-      }
-
-      // Si el displayName no está configurado, buscar en Firestore (opcional)
-      const userDocPath = `users/${currentUser.uid}`; // Ruta del documento en Firestore
-      const userData = await this.getDocument(userDocPath);
-
-      if (userData && userData['displayName']) {
-        return userData['displayName'];
-      }
-    }
-
-    return null; // Si no se encuentra información del usuario
-  }
-
-  // Obtener el horario del usuario
-  async getHorario(): Promise<void> {
-    const currentUser = getAuth().currentUser;
-  
-    if (currentUser) {
-      const uid = currentUser.uid; // Obtén el UID del estudiante autenticado
-      const userHorarioDoc = doc(this.db, 'users', uid); // Ruta del documento del horario del estudiante
-  
-      try {
-        const docSnap = await getDoc(userHorarioDoc);
-  
-        if (docSnap.exists()) {
-          this.horario = docSnap.data()?.['horario'] || null; // Accede a 'horario' usando corchetes
-          console.log(this.horario); // Verifica la estructura de datos
-        } else {
-          console.log('No se encontró el horario para este usuario');
-        }
-      } catch (error) {
-        console.error('Error al obtener el horario:', error);
-      }
-    }
-  }
-  
-
-  // Obtener las clases de un día y una hora específica
   getClasesPorDia(dia: string): any[] {
-    if (this.horario && this.horario.clases) {
-      return this.horario.clases.filter((clase: any) => clase.dia === dia);
+    if (this.horario && this.horario['clases']) {
+      return this.horario['clases'].filter((clase: any) => clase.dia === dia);
     }
     return [];
   }
@@ -146,17 +82,64 @@ export class FirebaseService {
     return null;
   }
 
-  // Obtener el horario del usuario por UID
-async getHorariosDelUsuario(uid: string): Promise<any> {
-  const userDocPath = `users/${uid}`; // Ruta del documento del usuario en Firestore
-  const userDoc = await this.getDocument(userDocPath); // Usamos el método getDocument que ya tienes
+  async getHorariosDelUsuario(uid: string): Promise<any> {
+    const userDocPath = `users/${uid}`;
+    const userDoc = await this.getDocument(userDocPath);
 
-  // Retornar el horario si está presente
-  if (userDoc && userDoc['horario']) {
-    return userDoc['horario']; // Accedemos a 'horario' usando corchetes
-  } else {
-    return null;
+    if (userDoc && userDoc['horario']) {
+      return userDoc['horario'];
+    } else {
+      return null;
+    }
   }
-}
 
+  //====================== Funciones de Escaneo =======================
+  // Guardar el resultado del escaneo con la fecha actual
+  async saveScanResult(scanResult: string, uid: string): Promise<void> {
+    try {
+      const fecha = new Date().toISOString();
+      const scanData = { uid, EscanerQR: scanResult, fecha };
+      const scanDocPath = `scan/${uid}`;
+      await this.setDocument(scanDocPath, scanData);
+      console.log('Resultado del escaneo guardado con éxito:', scanData);
+    } catch (error) {
+      console.error('Error al guardar el resultado del escaneo:', error);
+      throw error;
+    }
+  }
+
+  // Procesar el resultado del escaneo y actualizar asistencia si coincide
+  async processScanResult(scanResult: string, uid: string): Promise<boolean> {
+    const [sigla, seccion, sala] = scanResult.trim().split('/'); // Dividimos el QR en sigla, sección y sala
+
+    // Referencia al documento de asignaturas del usuario
+    const asignaturaDocPath = `asignaturas/${uid}`;
+    const asignaturaDocSnap = await this.getDocument(asignaturaDocPath);
+
+    if (asignaturaDocSnap) {
+      const asignaturas = asignaturaDocSnap['clases'];
+
+      // Buscar la asignatura que coincida
+      const asignaturaEncontrada = asignaturas.find(
+        (asignatura: any) =>
+          asignatura.sigla === sigla &&
+          asignatura.seccion === seccion &&
+          asignatura.sala === sala
+      );
+
+      if (asignaturaEncontrada) {
+        // Incrementar asistencia
+        asignaturaEncontrada.asistencias = (asignaturaEncontrada.asistencias || 0) + 1;
+
+        // Actualizar el documento en Firestore
+        await updateDoc(doc(this.db, asignaturaDocPath), { clases: asignaturas });
+
+        console.log(`Asistencia incrementada para la asignatura: ${sigla}`);
+        return true; // Indicar que la asistencia fue incrementada
+      }
+    }
+
+    console.error('No se encontró una asignatura válida para el escaneo.');
+    return false; // No se encontró coincidencia
+  }
 }

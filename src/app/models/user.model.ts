@@ -11,25 +11,24 @@ export interface User{
 }
 
   
-  export interface Horario {
-    asignatura: string;
-    sigla: string;
-    profesor: string;
-    dia: string;
-    horaInicio: string;
-    horaFin: string;
-  }
+export interface Horario {
+  asignatura: string;
+  sigla: string;
+  profesor: string;
+  dia: string;
+  horaInicio: string;
+  horaFin: string;
+}
 
 
 
 export interface EscanerQR{
-  sigla: string,
-  profesor: string,
-  titulo: string,
-  asistencias: string,
+ uid:string,
+ EscanerQR:string,
+ fecha:string,
 }
 
-interface Asignatura {
+export interface Asignatura {
   asistencias: number;
-  // Agrega otras propiedades de la asignatura si es necesario
+  
 }

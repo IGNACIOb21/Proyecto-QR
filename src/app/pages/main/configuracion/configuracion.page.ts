@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore'; // Importar AngularFirestore
 import { AngularFireAuth } from '@angular/fire/compat/auth'; // Importar AngularFireAuth
 
+
 @Component({
   selector: 'app-configuracion',
   templateUrl: './configuracion.page.html',
