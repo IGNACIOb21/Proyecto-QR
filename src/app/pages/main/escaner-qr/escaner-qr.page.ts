@@ -11,16 +11,16 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 })
 export class EscanerQRPage implements OnInit {
   segment = 'scan';
-  scanResult = ''; // Código QR completo
-  siglas: string = ''; // Variable para almacenar las siglas
-  seccion: string = ''; // Variable para almacenar la sección
-  sala: string = ''; // Variable para almacenar la sala
+  scanResult = '';
+  siglas = '';
+  seccion = '';
+  sala = '';
 
   constructor(
     private modalController: ModalController,
     private platform: Platform,
     private firebaseService: FirebaseService,
-    private toastController: ToastController // Toast para notificaciones
+    private toastController: ToastController
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +31,6 @@ export class EscanerQRPage implements OnInit {
     }
   }
 
-  // Método para mostrar mensajes Toast
   async presentToast(message: string, color: string = 'danger') {
     const toast = await this.toastController.create({
       message,
@@ -41,7 +40,6 @@ export class EscanerQRPage implements OnInit {
     await toast.present();
   }
 
-  // Método principal para iniciar el escaneo
   async startScan() {
     const modal = await this.modalController.create({
       component: BarcodeScanningModalComponent,
@@ -57,14 +55,24 @@ export class EscanerQRPage implements OnInit {
       this.scanResult = data?.barcode.displayValue; // Guardamos el resultado del escaneo
 
       // Validar el formato del código QR
-      const qrCodePattern = /^[A-Z]{3}[0-9]{3}\|\d{3}[A-Z]\|L\d+$/; // Patrón esperado
+      const qrCodePattern = /^[A-Z]{3}[0-9]{3}\|\d{3}[A-Z]\|L\d+\|\d{8}$/; // Nuevo patrón
       if (!qrCodePattern.test(this.scanResult)) {
         await this.presentToast('El código escaneado no es válido en esta operación.', 'danger');
-        return; // Detener el flujo si el código no es válido
+        return; // Terminar el flujo si el código no es válido
       }
 
-      // Dividir el código QR en partes (Siglas, Sección, Sala)
-      const [siglas, seccion, sala] = this.scanResult.split('|');
+      // Descomponer el código QR
+      const [siglas, seccion, sala, fecha] = this.scanResult.split('|');
+
+      // Validar que la fecha del código QR coincida con la fecha actual
+      const today = new Date();
+      const formattedToday = today.toISOString().slice(0, 10).replace(/-/g, ''); // Formato YYYYMMDD
+      if (fecha !== formattedToday) {
+        await this.presentToast('El código QR no es válido para hoy.', 'danger');
+        return; // Terminar el flujo si la fecha no coincide
+      }
+
+      // Mostrar los datos desglosados
       this.siglas = siglas;
       this.seccion = seccion;
       this.sala = sala;
@@ -73,9 +81,9 @@ export class EscanerQRPage implements OnInit {
       const user = await this.firebaseService.getUserData();
       const uid = user?.uid;
 
+      // Procesar el resultado del escaneo
       if (uid) {
-        // Procesar el resultado del escaneo y actualizar la asistencia
-        const success = await this.firebaseService.processScanResult(this.scanResult, uid);
+        const success = await this.firebaseService.processScanResult(`${siglas}|${seccion}|${sala}`, uid);
         if (success) {
           await this.presentToast('El código QR se escaneó exitosamente.', 'success');
         } else {
