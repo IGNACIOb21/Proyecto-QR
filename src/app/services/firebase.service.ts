@@ -110,7 +110,7 @@ export class FirebaseService {
 
   // Procesar el resultado del escaneo y actualizar asistencia si coincide
   async processScanResult(scanResult: string, uid: string): Promise<boolean> {
-    const [sigla, seccion, sala] = scanResult.trim().split('/'); // Dividimos el QR en sigla, sección y sala
+    const [sigla, seccion, sala] = scanResult.trim().split('|'); // Dividimos el QR en sigla, sección y sala
 
     // Referencia al documento de asignaturas del usuario
     const asignaturaDocPath = `asignaturas/${uid}`;

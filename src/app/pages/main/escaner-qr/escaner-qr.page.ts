@@ -57,14 +57,14 @@ export class EscanerQRPage implements OnInit {
       this.scanResult = data?.barcode.displayValue; // Guardamos el resultado del escaneo
 
       // Validar el formato del código QR
-      const qrCodePattern = /^[A-Z]{3}[0-9]{3}\/\d{3}[A-Z]\/L\d+$/; // Patrón esperado
+      const qrCodePattern = /^[A-Z]{3}[0-9]{3}\|\d{3}[A-Z]\|L\d+$/; // Patrón esperado
       if (!qrCodePattern.test(this.scanResult)) {
         await this.presentToast('El código escaneado no es válido en esta operación.', 'danger');
         return; // Detener el flujo si el código no es válido
       }
 
       // Dividir el código QR en partes (Siglas, Sección, Sala)
-      const [siglas, seccion, sala] = this.scanResult.split('/');
+      const [siglas, seccion, sala] = this.scanResult.split('|');
       this.siglas = siglas;
       this.seccion = seccion;
       this.sala = sala;
